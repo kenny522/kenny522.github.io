@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>UX Case Study — Elevato Studios Mobile Product Page | Kenny Nguyen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#14181F;
+    --paper:#FBF9F6;
+    --panel:#F1EEE7;
+    --panel-2:#E7E2D8;
+    --pine:#2B5D52;
+    --pine-dim:#3F7367;
+    --mustard:#D6A13C;
+    --line:#DFDAD0;
+    --muted:#6B6558;
+    --white:#FFFFFF;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation:none !important; transition:none !important;}
+  }
+
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{color:var(--pine);}
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--pine);
+    outline-offset:3px;
+  }
+
+  .mono{
+    font-family:'IBM Plex Mono', monospace;
+    letter-spacing:0.02em;
+  }
+
+  /* ---- Top nav ---- */
+  .topnav{
+    position:sticky; top:0; z-index:40;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px clamp(20px,5vw,56px);
+    background:rgba(251,249,246,0.9);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .topnav .brand{font-weight:600; font-size:15px;}
+  .topnav .back{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    text-decoration:none;
+    color:var(--ink);
+    border:1px solid var(--line);
+    padding:6px 12px;
+    border-radius:20px;
+  }
+  .topnav .back:hover{border-color:var(--pine); color:var(--pine);}
+
+  /* ---- Layout shell ---- */
+  .shell{
+    display:grid;
+    grid-template-columns:200px 1fr;
+    gap:0;
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 clamp(20px,5vw,56px);
+  }
+  @media (max-width:860px){
+    .shell{grid-template-columns:1fr;}
+    .rail{display:none;}
+  }
+
+  .rail{
+    position:sticky;
+    top:76px;
+    align-self:start;
+    padding:64px 0;
+    height:fit-content;
+  }
+  .rail ol{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:22px;}
+  .rail a{
+    display:flex; gap:10px; align-items:baseline;
+    text-decoration:none; color:var(--muted); font-size:13px;
+  }
+  .rail a:hover{color:var(--pine);}
+  .rail .num{font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--mustard);}
+
+  main{padding:64px 0 100px; min-width:0;}
+
+  /* ---- Hero ---- */
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--pine);
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    margin:0 0 18px;
+  }
+  h1{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:clamp(32px,4.6vw,52px);
+    line-height:1.08;
+    margin:0 0 22px;
+    max-width:16ch;
+  }
+  .lede{
+    font-size:18px;
+    color:#333;
+    max-width:58ch;
+    margin:0 0 34px;
+  }
+  .meta{
+    display:flex; flex-wrap:wrap; gap:28px;
+    padding:22px 0;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    margin-bottom:20px;
+  }
+  .meta div{display:flex; flex-direction:column; gap:4px;}
+  .meta span.label{font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.06em;}
+  .meta span.value{font-size:14px; font-weight:500;}
+
+  .note-box{
+    background:var(--panel);
+    border-left:3px solid var(--mustard);
+    padding:16px 20px;
+    font-size:14px;
+    color:#3d3a33;
+    margin:28px 0 0;
+    max-width:64ch;
+  }
+
+  /* ---- Sections ---- */
+  section{padding:76px 0; border-top:1px solid var(--line);}
+  section:first-of-type{border-top:none;}
+  .section-head{display:flex; align-items:baseline; gap:14px; margin-bottom:26px;}
+  .section-num{font-family:'IBM Plex Mono', monospace; color:var(--mustard); font-size:13px;}
+  h2{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:clamp(24px,3vw,32px);
+    margin:0;
+  }
+  p{max-width:66ch;}
+  .body-text{font-size:16px; color:#2c2a25;}
+
+  .heuristics{
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:14px; margin-top:28px;
+  }
+  .heuristic-card{
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:18px 18px 20px;
+  }
+  .heuristic-card .tag{
+    display:inline-block;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    background:var(--panel);
+    color:var(--pine);
+    padding:3px 8px;
+    border-radius:4px;
+    margin-bottom:10px;
+  }
+  .heuristic-card h3{font-size:15px; margin:0 0 6px; font-weight:600;}
+  .heuristic-card p{font-size:13.5px; color:var(--muted); margin:0;}
+
+  /* ---- Mockup comparison ---- */
+  .compare{
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:32px;
+    margin-top:36px;
+    align-items:start;
+  }
+  @media (max-width:700px){ .compare{grid-template-columns:1fr;} }
+  .frame-wrap{display:flex; flex-direction:column; align-items:center;}
+  .frame-label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    margin-bottom:14px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .frame-label.before{color:#A3402E;}
+  .frame-label.after{color:var(--pine);}
+  .dot{width:7px; height:7px; border-radius:50%; display:inline-block; background:currentColor;}
+  svg.mock{width:100%; max-width:250px; height:auto;}
+
+  .legend{margin-top:18px; width:100%; max-width:250px;}
+  .legend-item{
+    display:flex; gap:10px; align-items:flex-start;
+    font-size:12.5px; color:#3d3a33; padding:6px 0;
+  }
+  .legend-pin{
+    flex:0 0 auto; width:16px; height:16px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'IBM Plex Mono', monospace; font-size:10px; font-weight:600; color:#fff;
+    margin-top:1px;
+  }
+  .legend-pin.before-pin{background:#A3402E;}
+  .legend-pin.after-pin{background:var(--pine);}
+
+  /* ---- Ideate thumbnails ---- */
+  .ideate-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:30px;}
+  @media (max-width:700px){ .ideate-grid{grid-template-columns:1fr; max-width:220px;} }
+  .idea-card{border:1px solid var(--line); border-radius:8px; padding:14px; background:var(--white);}
+  .idea-card.chosen{border-color:var(--pine); box-shadow:0 0 0 1px var(--pine);}
+  .idea-card svg{width:100%; height:auto; display:block;}
+  .idea-caption{font-size:12.5px; margin-top:10px; color:var(--muted);}
+  .idea-caption strong{color:var(--ink); display:block; font-size:13px; margin-bottom:2px;}
+  .chosen-tag{
+    font-family:'IBM Plex Mono', monospace; font-size:10px; color:var(--pine);
+    text-transform:uppercase; letter-spacing:.05em; margin-top:6px; display:inline-block;
+  }
+
+  /* ---- Rationale list ---- */
+  .rationale{margin-top:30px; display:flex; flex-direction:column; gap:16px; max-width:64ch;}
+  .rationale-row{display:flex; gap:16px;}
+  .rationale-row .n{
+    font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--pine);
+    flex:0 0 26px;
+  }
+  .rationale-row p{margin:0; font-size:15px;}
+  .rationale-row strong{color:var(--ink);}
+
+  /* ---- Validate / reflection ---- */
+  .quote-block{
+    background:var(--ink); color:var(--paper);
+    padding:40px clamp(24px,5vw,56px);
+    border-radius:12px;
+    margin-top:10px;
+  }
+  .quote-block p{color:#E6E2D8; font-size:16px; max-width:60ch; margin:0;}
+  .quote-block .kicker{font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--mustard); text-transform:uppercase; letter-spacing:.06em; margin-bottom:14px; display:block;}
+
+  footer{
+    padding:50px clamp(20px,5vw,56px) 70px;
+    border-top:1px solid var(--line);
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px;
+    max-width:1180px; margin:0 auto;
+  }
+  footer .f-left{font-size:14px; color:var(--muted);}
+  footer a.cta{
+    font-family:'IBM Plex Mono', monospace; font-size:13px;
+    text-decoration:none; color:var(--ink);
+    border:1px solid var(--ink); padding:10px 18px; border-radius:24px;
+  }
+  footer a.cta:hover{background:var(--ink); color:var(--paper);}
+
+  .fade-in{opacity:0; transform:translateY(14px); transition:opacity .5s ease, transform .5s ease;}
+  .fade-in.visible{opacity:1; transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<div class="topnav">
+  <span class="brand">Kenny Nguyen</span>
+  <a class="back" href="index.html">← Back to portfolio</a>
+</div>
+
+<div class="shell">
+  <nav class="rail" aria-label="Case study sections">
+    <ol>
+      <li><a href="#discover"><span class="num">01</span> Discover</a></li>
+      <li><a href="#define"><span class="num">02</span> Define</a></li>
+      <li><a href="#ideate"><span class="num">03</span> Ideate</a></li>
+      <li><a href="#design"><span class="num">04</span> Design</a></li>
+      <li><a href="#validate"><span class="num">05</span> Validate</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <section style="padding-top:12px;">
+      <p class="eyebrow">UX Case Study — Self-Directed</p>
+      <h1>Redesigning the mobile product page for Elevato Studios</h1>
+      <p class="lede">An audit-and-redesign proposal for the site I already maintain day to day — built to show how I diagnose friction in an experience, not just fix what's broken.</p>
+
+      <div class="meta">
+        <div><span class="label">Role</span><span class="value">UX Audit &amp; Redesign</span></div>
+        <div><span class="label">Tools</span><span class="value">Figma, Shopify Admin, GA4</span></div>
+        <div><span class="label">Type</span><span class="value">Self-directed / concept</span></div>
+        <div><span class="label">Site</span><span class="value">elevatostudios.com</span></div>
+      </div>
+
+      <div class="note-box mono" style="font-size:13px;">
+        A note on honesty: this redesign has not shipped to production. It's a self-directed exercise built on a real site I manage, meant to demonstrate process — not a claim of measured business results.
+      </div>
+    </section>
+
+    <section id="discover">
+      <div class="section-head">
+        <span class="section-num mono">01</span>
+        <h2>Discover</h2>
+      </div>
+      <p class="body-text">Elevato Studios is the live Shopify storefront for Style Without Effort, a direct-to-consumer apparel brand. I own this site's day-to-day content, QA, and analytics. A routine mobile QA pass turned into a full heuristic evaluation of the product page — the highest-traffic, highest-stakes screen on the site.</p>
+      <p class="body-text">I walked the mobile product page against Nielsen's usability heuristics and flagged four recurring friction points:</p>
+
+      <div class="heuristics">
+        <div class="heuristic-card">
+          <span class="tag">Visibility of system status</span>
+          <h3>No swipe indicator</h3>
+          <p>The product image gallery is swipeable, but nothing signals that or shows how many photos remain.</p>
+        </div>
+        <div class="heuristic-card">
+          <span class="tag">Recognition over recall</span>
+          <h3>Size guide is buried</h3>
+          <p>Sizing help is a small text link beneath the size buttons — easy to miss on a phone screen.</p>
+        </div>
+        <div class="heuristic-card">
+          <span class="tag">User control &amp; freedom</span>
+          <h3>No persistent add-to-cart</h3>
+          <p>The CTA sits in the normal content flow below the description, so it scrolls out of reach.</p>
+        </div>
+        <div class="heuristic-card">
+          <span class="tag">Match with the real world</span>
+          <h3>Social proof arrives too late</h3>
+          <p>Review count and rating live at the very bottom of the page, after the buying decision is usually made.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="define">
+      <div class="section-head">
+        <span class="section-num mono">02</span>
+        <h2>Define</h2>
+      </div>
+      <p class="body-text"><strong>User goal:</strong> decide on a size and buy with confidence, fast. <strong>Business goal:</strong> reduce mobile bounce and friction between product view and add-to-cart.</p>
+      <p class="body-text">I set one constraint for the redesign: every change has to remove a tap, a scroll, or a moment of doubt — not add decoration.</p>
+    </section>
+
+    <section id="ideate">
+      <div class="section-head">
+        <span class="section-num mono">03</span>
+        <h2>Ideate</h2>
+      </div>
+      <p class="body-text">I sketched three directions before committing to one, ranging from a minimal patch to a fuller restructure.</p>
+
+      <div class="ideate-grid">
+        <div class="idea-card">
+          <svg viewBox="0 0 180 140" class="mock">
+            <rect x="0" y="0" width="180" height="140" fill="#F1EEE7"/>
+            <rect x="14" y="14" width="152" height="60" fill="#E7E2D8"/>
+            <rect x="14" y="82" width="90" height="6" fill="#DFDAD0"/>
+            <rect x="14" y="94" width="60" height="6" fill="#DFDAD0"/>
+            <rect x="14" y="118" width="152" height="14" rx="3" fill="#2B5D52"/>
+          </svg>
+          <div class="idea-caption"><strong>A — Sticky CTA only</strong>Add a persistent add-to-cart bar, leave everything else as-is.</div>
+        </div>
+        <div class="idea-card">
+          <svg viewBox="0 0 180 140" class="mock">
+            <rect x="0" y="0" width="180" height="140" fill="#F1EEE7"/>
+            <rect x="14" y="14" width="152" height="50" fill="#E7E2D8"/>
+            <rect x="14" y="70" width="80" height="6" fill="#DFDAD0"/>
+            <rect x="14" y="82" width="90" height="10" rx="2" fill="#D6A13C"/>
+            <rect x="14" y="118" width="152" height="14" rx="3" fill="#2B5D52"/>
+          </svg>
+          <div class="idea-caption"><strong>B — CTA + earlier reviews</strong>Sticky CTA, plus pull the rating badge up near the price.</div>
+        </div>
+        <div class="idea-card chosen">
+          <svg viewBox="0 0 180 140" class="mock">
+            <rect x="0" y="0" width="180" height="140" fill="#F1EEE7"/>
+            <rect x="14" y="14" width="152" height="48" fill="#E7E2D8"/>
+            <circle cx="82" cy="66" r="2.5" fill="#D6A13C"/>
+            <circle cx="90" cy="66" r="2.5" fill="#DFDAD0"/>
+            <circle cx="98" cy="66" r="2.5" fill="#DFDAD0"/>
+            <rect x="14" y="76" width="70" height="6" fill="#DFDAD0"/>
+            <rect x="14" y="86" width="90" height="10" rx="5" fill="#D6A13C"/>
+            <rect x="14" y="102" width="34" height="14" rx="4" fill="#fff" stroke="#2B5D52"/>
+            <rect x="52" y="102" width="34" height="14" rx="4" fill="#fff" stroke="#2B5D52"/>
+            <rect x="14" y="126" width="152" height="12" rx="3" fill="#2B5D52"/>
+          </svg>
+          <div class="idea-caption"><strong>C — Full restructure</strong>Swipe dots, earlier social proof, bigger size targets, sticky CTA.</div>
+          <span class="chosen-tag mono">→ Chosen direction</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="design">
+      <div class="section-head">
+        <span class="section-num mono">04</span>
+        <h2>Design</h2>
+      </div>
+      <p class="body-text">Direction C addressed all four audit findings at once without adding new screens or steps — just reordering and clarifying what was already there.</p>
+
+      <div class="compare">
+        <!-- BEFORE -->
+        <div class="frame-wrap">
+          <span class="frame-label before"><span class="dot"></span>Before</span>
+          <svg viewBox="0 0 240 500" class="mock" role="img" aria-label="Wireframe of the current mobile product page">
+            <rect x="0" y="0" width="240" height="500" rx="30" fill="#14181F"/>
+            <rect x="8" y="8" width="224" height="484" rx="20" fill="#FBF9F6"/>
+            <!-- image -->
+            <rect x="16" y="16" width="208" height="176" fill="#E7E2D8"/>
+            <circle cx="214" cy="30" r="10" fill="#A3402E"/>
+            <text x="214" y="34" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="#fff">1</text>
+            <!-- title / price -->
+            <rect x="16" y="204" width="120" height="9" fill="#14181F"/>
+            <rect x="16" y="220" width="42" height="8" fill="#2B5D52"/>
+            <!-- size guide link -->
+            <text x="16" y="246" font-family="IBM Plex Mono" font-size="7" fill="#8a8474">size guide</text>
+            <circle cx="70" cy="243" r="9" fill="#A3402E"/>
+            <text x="70" y="246" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#fff">2</text>
+            <!-- size buttons -->
+            <rect x="16" y="256" width="18" height="18" fill="#fff" stroke="#DFDAD0"/>
+            <rect x="40" y="256" width="18" height="18" fill="#fff" stroke="#DFDAD0"/>
+            <rect x="64" y="256" width="18" height="18" fill="#fff" stroke="#DFDAD0"/>
+            <rect x="88" y="256" width="18" height="18" fill="#fff" stroke="#DFDAD0"/>
+            <!-- description -->
+            <rect x="16" y="288" width="200" height="5" fill="#E7E2D8"/>
+            <rect x="16" y="300" width="188" height="5" fill="#E7E2D8"/>
+            <rect x="16" y="312" width="140" height="5" fill="#E7E2D8"/>
+            <!-- CTA in normal flow -->
+            <rect x="16" y="332" width="208" height="34" rx="6" fill="#14181F"/>
+            <text x="120" y="353" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="#fff">ADD TO CART</text>
+            <circle cx="214" cy="326" r="10" fill="#A3402E"/>
+            <text x="214" y="330" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="#fff">3</text>
+            <!-- reviews at very bottom -->
+            <text x="16" y="464" font-family="IBM Plex Mono" font-size="9" fill="#8a8474">★★★★★  12 reviews</text>
+            <circle cx="214" cy="460" r="10" fill="#A3402E"/>
+            <text x="214" y="464" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="#fff">4</text>
+          </svg>
+          <div class="legend">
+            <div class="legend-item"><span class="legend-pin before-pin">1</span>No swipe indicator on the image gallery</div>
+            <div class="legend-item"><span class="legend-pin before-pin">2</span>Size guide is a small, easy-to-miss link</div>
+            <div class="legend-item"><span class="legend-pin before-pin">3</span>Add-to-cart scrolls out of reach</div>
+            <div class="legend-item"><span class="legend-pin before-pin">4</span>Reviews arrive after the decision point</div>
+          </div>
+        </div>
+
+        <!-- AFTER -->
+        <div class="frame-wrap">
+          <span class="frame-label after"><span class="dot"></span>After</span>
+          <svg viewBox="0 0 240 500" class="mock" role="img" aria-label="Wireframe of the redesigned mobile product page">
+            <rect x="0" y="0" width="240" height="500" rx="30" fill="#14181F"/>
+            <rect x="8" y="8" width="224" height="484" rx="20" fill="#FBF9F6"/>
+            <!-- image with swipe dots -->
+            <rect x="16" y="16" width="208" height="168" fill="#E7E2D8"/>
+            <circle cx="112" cy="192" r="3" fill="#D6A13C"/>
+            <circle cx="122" cy="192" r="3" fill="#DFDAD0"/>
+            <circle cx="132" cy="192" r="3" fill="#DFDAD0"/>
+            <!-- rating badge pulled up -->
+            <rect x="16" y="204" width="120" height="18" rx="9" fill="#F1EEE7"/>
+            <text x="26" y="216" font-family="IBM Plex Mono" font-size="9" fill="#2B5D52">★ 4.8 · 213 reviews</text>
+            <circle cx="150" cy="204" r="10" fill="#2B5D52"/>
+            <text x="150" y="208" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="#fff">4</text>
+            <!-- title / price -->
+            <rect x="16" y="234" width="120" height="9" fill="#14181F"/>
+            <rect x="16" y="250" width="42" height="8" fill="#2B5D52"/>
+            <!-- size guide pill -->
+            <rect x="16" y="264" width="92" height="20" rx="10" fill="#fff" stroke="#2B5D52"/>
+            <text x="62" y="277" text-anchor="middle" font-family="IBM Plex Mono" font-size="8" fill="#2B5D52">Size guide</text>
+            <circle cx="118" cy="264" r="10" fill="#2B5D52"/>
+            <text x="118" y="268" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="#fff">2</text>
+            <!-- bigger size buttons -->
+            <rect x="16" y="292" width="24" height="24" rx="4" fill="#fff" stroke="#2B5D52" stroke-width="1.5"/>
+            <rect x="46" y="292" width="24" height="24" rx="4" fill="#fff" stroke="#2B5D52" stroke-width="1.5"/>
+            <rect x="76" y="292" width="24" height="24" rx="4" fill="#fff" stroke="#2B5D52" stroke-width="1.5"/>
+            <rect x="106" y="292" width="24" height="24" rx="4" fill="#fff" stroke="#2B5D52" stroke-width="1.5"/>
+            <!-- trimmed description -->
+            <rect x="16" y="330" width="200" height="5" fill="#E7E2D8"/>
+            <rect x="16" y="342" width="150" height="5" fill="#E7E2D8"/>
+            <!-- sticky CTA -->
+            <rect x="8" y="452" width="224" height="40" fill="#2B5D52"/>
+            <text x="120" y="476" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="#fff">ADD TO CART — $68</text>
+            <circle cx="214" cy="452" r="10" fill="#2B5D52"/>
+            <text x="214" y="456" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="#fff">3</text>
+            <circle cx="214" cy="30" r="10" fill="#2B5D52"/>
+            <text x="214" y="34" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="#fff">1</text>
+          </svg>
+          <div class="legend">
+            <div class="legend-item"><span class="legend-pin after-pin">1</span>Dot indicators show position in the gallery</div>
+            <div class="legend-item"><span class="legend-pin after-pin">2</span>Size guide is a visible pill button with clearer targets</div>
+            <div class="legend-item"><span class="legend-pin after-pin">3</span>Add-to-cart bar stays pinned at the bottom</div>
+            <div class="legend-item"><span class="legend-pin after-pin">4</span>Rating moves up next to the price, before the size decision</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="rationale">
+        <div class="rationale-row">
+          <span class="n mono">→</span>
+          <p><strong>Why move the rating up:</strong> social proof works best right before a decision point, not after it. Sizing is the biggest hesitation moment on an apparel PDP, so the rating now sits directly above it.</p>
+        </div>
+        <div class="rationale-row">
+          <span class="n mono">→</span>
+          <p><strong>Why a sticky CTA:</strong> on mobile, the add-to-cart action shouldn't depend on how far someone has scrolled. Making it persistent removes a scroll-back tax with no added visual weight.</p>
+        </div>
+        <div class="rationale-row">
+          <span class="n mono">→</span>
+          <p><strong>Why bigger size targets:</strong> the original 18px touch targets sit below common mobile tap-target guidance. Sizing them up reduces mis-taps without changing the layout's footprint.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="validate">
+      <div class="section-head">
+        <span class="section-num mono">05</span>
+        <h2>Validate &amp; reflect</h2>
+      </div>
+      <p class="body-text">This case study stops at a validated design direction, not a shipped result — and I'd want to keep it that way in how it's presented. The honest next steps:</p>
+      <div class="rationale">
+        <div class="rationale-row">
+          <span class="n mono">1</span>
+          <p>Run a small moderated usability test (5 mobile users) watching specifically for hesitation at the sizing step.</p>
+        </div>
+        <div class="rationale-row">
+          <span class="n mono">2</span>
+          <p>Ship the sticky CTA and reordered rating as a scoped A/B test, since they're the two lowest-risk, highest-impact changes.</p>
+        </div>
+        <div class="rationale-row">
+          <span class="n mono">3</span>
+          <p>Measure against add-to-cart rate and mobile bounce rate — the two metrics tied directly to the original audit findings.</p>
+        </div>
+      </div>
+
+      <div class="quote-block" style="margin-top:40px;">
+        <span class="kicker">Why this matters for how I work</span>
+        <p>I already own this site's front end, so this case study doesn't have to stop at a Figma file. I could implement this redesign directly in Liquid, CSS, and JavaScript — the same skill set I use to maintain the live site today.</p>
+      </div>
+    </section>
+  </main>
+</div>
+
+<footer>
+  <span class="f-left">Kenny Nguyen — Website Developer &amp; E-Commerce Operations Manager</span>
+  <a class="cta" href="index.html">View full portfolio →</a>
+</footer>
+
+<script>
+  const els = document.querySelectorAll('section, .heuristic-card, .idea-card, .frame-wrap');
+  els.forEach(el => el.classList.add('fade-in'));
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target);} });
+  }, {threshold:0.12});
+  els.forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
